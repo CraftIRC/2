@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.conversations.Conversation;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
@@ -19,8 +20,8 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
     private Boolean op = false;
     private RelayedMessage ircConCmd = null;
     private ConsoleCommandSender sender;
-    
- 
+
+
     /**
      * 
      * @param server  - Server
@@ -32,11 +33,11 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
         this.ircConCmd = ircConCmd;
         this.op = isOp;
     }
-    
+
     public boolean isOp() { return this.op; }
-    
+
     public boolean isPlayer() { return false; }
-    
+
     public void sendMessage(String message) {
         try {
             ircConCmd.getPlugin().sendMessageToTag(">> " + message, ircConCmd.srcChannelTag);
@@ -99,5 +100,39 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
 
     public void setOp(boolean arg0) {
         sender.setOp(arg0);
+    }
+
+    public void sendMessage(String[] arg0) {
+        try {
+            for(String message:arg0){
+                ircConCmd.getPlugin().sendMessageToTag(">> " + message, ircConCmd.srcChannelTag);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void abandonConversation(Conversation arg0) {
+        sender.abandonConversation(arg0);
+    }
+
+    public void acceptConversationInput(String arg0) {
+        sender.acceptConversationInput(arg0);
+    }
+
+    public boolean beginConversation(Conversation arg0) {
+        return sender.beginConversation(arg0);
+    }
+
+    public boolean isConversing() {
+        return sender.isConversing();
+    }
+
+    public void sendRawMessage(String message) {
+        try {
+            ircConCmd.getPlugin().sendMessageToTag(">> " + message, ircConCmd.srcChannelTag);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
