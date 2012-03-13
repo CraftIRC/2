@@ -1,6 +1,7 @@
 package com.ensifera.animosity.craftirc;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
@@ -149,6 +150,11 @@ public class CraftIRC extends JavaPlugin {
             setDebug(cDebug());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        try {
+            new Metrics(this).start();
+        } catch (final IOException e) {
+            //Meh.
         }
     }
 
