@@ -21,7 +21,7 @@ import org.bukkit.plugin.Plugin;
 public class IRCConsoleCommandSender implements ConsoleCommandSender {
     private Boolean op = false;
     private RelayedMessage ircConCmd = null;
-    private ConsoleCommandSender sender;
+    private final ConsoleCommandSender sender;
 
     /**
      * 
@@ -39,7 +39,7 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
     }
 
     public void abandonConversation(Conversation conversation) {
-        sender.abandonConversation(conversation);
+        this.sender.abandonConversation(conversation);
     }
 
     public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details) {
@@ -47,51 +47,51 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
     }
 
     public void acceptConversationInput(String input) {
-        sender.acceptConversationInput(input);
+        this.sender.acceptConversationInput(input);
     }
 
     public PermissionAttachment addAttachment(Plugin plugin) {
-        return sender.addAttachment(plugin);
+        return this.sender.addAttachment(plugin);
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
-        return sender.addAttachment(plugin, ticks);
+        return this.sender.addAttachment(plugin, ticks);
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
-        return sender.addAttachment(plugin, name, value);
+        return this.sender.addAttachment(plugin, name, value);
     }
 
     public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
-        return sender.addAttachment(plugin, name, value, ticks);
+        return this.sender.addAttachment(plugin, name, value, ticks);
     }
 
     public boolean beginConversation(Conversation conversation) {
-        return sender.beginConversation(conversation);
+        return this.sender.beginConversation(conversation);
     }
 
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        return sender.getEffectivePermissions();
+        return this.sender.getEffectivePermissions();
     }
 
     public String getName() {
-        return sender.getName();
+        return this.sender.getName();
     }
 
     public Server getServer() {
-        return sender.getServer();
+        return this.sender.getServer();
     }
 
     public boolean hasPermission(Permission perm) {
-        return sender.hasPermission(perm);
+        return this.sender.hasPermission(perm);
     }
 
     public boolean hasPermission(String name) {
-        return sender.hasPermission(name);
+        return this.sender.hasPermission(name);
     }
 
     public boolean isConversing() {
-        return sender.isConversing();
+        return this.sender.isConversing();
     }
 
     public boolean isOp() {
@@ -99,11 +99,11 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
     }
 
     public boolean isPermissionSet(Permission perm) {
-        return sender.isPermissionSet(perm);
+        return this.sender.isPermissionSet(perm);
     }
 
     public boolean isPermissionSet(String name) {
-        return sender.isPermissionSet(name);
+        return this.sender.isPermissionSet(name);
     }
 
     public boolean isPlayer() {
@@ -111,40 +111,40 @@ public class IRCConsoleCommandSender implements ConsoleCommandSender {
     }
 
     public void recalculatePermissions() {
-        sender.recalculatePermissions();
+        this.sender.recalculatePermissions();
     }
 
     public void removeAttachment(PermissionAttachment attachment) {
-        sender.removeAttachment(attachment);
+        this.sender.removeAttachment(attachment);
     }
 
     public void sendMessage(String message) {
         try {
-            ircConCmd.getPlugin().sendMessageToTag(">> " + message, ircConCmd.srcChannelTag);
-        } catch (Exception e) {
+            this.ircConCmd.getPlugin().sendMessageToTag(">> " + message, this.ircConCmd.srcChannelTag);
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendMessage(String[] messages) {
         try {
-            for (String message : messages) {
-                ircConCmd.getPlugin().sendMessageToTag(">> " + message, ircConCmd.srcChannelTag);
+            for (final String message : messages) {
+                this.ircConCmd.getPlugin().sendMessageToTag(">> " + message, this.ircConCmd.srcChannelTag);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendRawMessage(String message) {
         try {
-            ircConCmd.getPlugin().sendMessageToTag(">> " + message, ircConCmd.srcChannelTag);
-        } catch (Exception e) {
+            this.ircConCmd.getPlugin().sendMessageToTag(">> " + message, this.ircConCmd.srcChannelTag);
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setOp(boolean value) {
-        sender.setOp(value);
+        this.sender.setOp(value);
     }
 }
